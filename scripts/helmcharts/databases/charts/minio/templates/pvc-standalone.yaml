@@ -5,6 +5,9 @@ metadata:
   name: {{ include "minio.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels: {{- include "minio.labels" . | nindent 4 }}
+  {{- if .Values.persistence.annotations }}
+  annotations: {{- include "minio.tplValue" ( dict "value" .Values.persistence.annotations "context" $) | nindent 4 }}
+  {{- end }}
 spec:
   accessModes:
   {{- range .Values.persistence.accessModes }}
